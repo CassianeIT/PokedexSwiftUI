@@ -19,20 +19,13 @@ struct AboutPokemon: View {
     }
     
     var body: some View {
-        
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(circleBackground).opacity(0.2), Color(circleBackground).opacity(0.6), .black]), startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+            LinearGradient(gradient: Gradient(colors: [Color(circleBackground).opacity(0.6), .gray.opacity(0.2), .black]), startPoint: .top, endPoint: .bottom).ignoresSafeArea()
             VStack {
-                Text(pokemon.name.uppercased())
-                    .font(.custom("OpenSans-Bold", fixedSize: 22) .weight(.black)
-                )
-                .foregroundColor(.black)
-                .padding(.top, 20)
-                
                 ZStack {
                     Circle()
                         .fill(
-                            RadialGradient(gradient: Gradient(colors: [Color(circleBackground).opacity(0.1), Color(circleBackground).opacity(0.3), Color(circleBackground).opacity(0.4),  Color(circleBackground).opacity(0.1)]), center: .center, startRadius: 50, endRadius: 250)
+                            RadialGradient(gradient: Gradient(colors: [Color(circleBackground).opacity(0.1), Color(circleBackground).opacity(0.3), Color(circleBackground).opacity(0.4),  Color(circleBackground).opacity(0.7)]), center: .center, startRadius: 50, endRadius: 150)
                         )
                         .frame(width: 350, height: 350)
 
@@ -47,7 +40,24 @@ struct AboutPokemon: View {
                     .frame(width: 450, height: 450, alignment: .center)
                         
                 }
+                Text(pokemon.name.capitalized)
+                    .font(.custom("OpenSans-Bold", fixedSize: 26)
+                        .weight(.black)
+                )
+                .foregroundColor(.white)
+                .padding(.top, 20)
                 
+                HStack {
+                    ForEach(pokemon.colors.sorted(by: { $0.key.rawValue < $1.key.rawValue }), id: \.key) { (tipo, color) in
+
+                        Text(tipo.rawValue)
+                            .foregroundColor(Color(color))
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color(color), lineWidth: 4))
+                                }
+                }
                 Spacer()
                 
             }

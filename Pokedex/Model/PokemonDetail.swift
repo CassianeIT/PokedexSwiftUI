@@ -15,7 +15,8 @@ struct PokemonDetail: Codable {
     var name: String
     var weight: Int
     var types: [Types]
-    var imagem: Sprites 
+    var imagem: Sprites
+    var colors: [Tipo: UIColor] = [.normal: .white]
     
     enum CodingKeys: String, CodingKey {
         case id, name, weight, types
@@ -44,11 +45,11 @@ struct Default: Codable {
     }
 }
 
-struct Types: Codable {
+struct Types: Codable, Hashable, Equatable {
     var type: Tipos
 }
 
-struct Tipos: Codable {
+struct Tipos: Codable, Hashable, Equatable {
     var name: Tipo
 }
 

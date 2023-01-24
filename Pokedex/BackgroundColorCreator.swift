@@ -11,8 +11,8 @@ import SwiftUI
 
 enum BackgroundColorCreator {
     
-    static func setBackgroundColor(pokemon: PokemonDetail) -> UIColor {
-        let typePokemon: Tipo = pokemon.types[0].type.name
+    static func setBackgroundColor(type: Tipo) -> UIColor {
+        let typePokemon: Tipo = type
         
         var circleBackground: UIColor = .white
 

@@ -11,6 +11,7 @@ import UIKit
 class ViewModelPokemon: ObservableObject {
     @Published var pokemonDetail = [PokemonDetail]()
     @Published var aboutPokemonViewColorBackground: UIColor = .white
+    @Published var pokemonColorsTypes: [Tipo: UIColor] = [:]
 
     func fetchDetails(pokemonName: String) {
         
@@ -27,10 +28,16 @@ class ViewModelPokemon: ObservableObject {
                 do {
                     
                     let jsonModel = try JSONDecoder().decode(PokemonDetail.self, from: data)
-                    print(jsonModel)
-                    DispatchQueue.main.async {
+                  //  print(jsonModel)
+                    DispatchQueue.main.async { [self] in
                         self.pokemonDetail = [jsonModel]
-                        self.aboutPokemonViewColorBackground = BackgroundColorCreator.setBackgroundColor(pokemon: self.pokemonDetail[0])
+                        self.aboutPokemonViewColorBackground = BackgroundColorCreator.setBackgroundColor(type: self.pokemonDetail[0].types[0].type.name)
+                        
+                        for i in self.pokemonDetail[0].types {
+                            self.pokemonColorsTypes[i.type.name] = BackgroundColorCreator.setBackgroundColor(type: i.type.name)
+                        }
+                        pokemonDetail[0].colors = pokemonColorsTypes
+
                     }
                 } catch  {
                     print("Failed to decode JSON: \(error)")
