@@ -65,7 +65,7 @@ struct HomeView: View {
                     
                     .onSubmit {
                         Task {
-                            searchCommit = await fecth(searchPokemon: name.lowercased())
+                            searchCommit =  await fecth(searchPokemon: name.lowercased())
                             
 //                            if let pokemon = pokemonApiService.pokemonDetail.first {
 //                                aboutPokemonViewColorBackground = BackgroundColorCreator.setBackgroundColor(pokemon: pokemonApiService.pokemonDetail[0])
@@ -81,10 +81,8 @@ struct HomeView: View {
                 .navigationDestination(isPresented: $searchCommit) {
                  
                     if let pokemon = pokemonApiService.pokemonDetail.first {
-                        
-//                        AboutPokemon(pokemonApiService: pokemonApiService)
-                        
-                        AboutPokemon(pokemon: pokemon, circleBackground: pokemonApiService.aboutPokemonViewColorBackground)
+                                              
+                        AboutPokemon(pokemon: pokemon)
                     }
                     
                 }
@@ -114,10 +112,12 @@ struct HomeView: View {
     }
     
     // MARK: - Private methods
-    private func fecth(searchPokemon: String) async -> Bool {
-        try? await pokemonApiService.fetchDetails(pokemonName: searchPokemon)
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        return true
+    private func fecth(searchPokemon: String) async  -> Bool {
+        try? await pokemonApiService.fetchDetails(pokemonName: searchPokemon) { result in
+            searchCommit = result
+        }
+    //    try? await Task.sleep(nanoseconds: 1_000_000_000)
+        return searchCommit
     }
 }
 

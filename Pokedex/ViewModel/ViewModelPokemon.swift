@@ -10,10 +10,8 @@ import SwiftUI
 import UIKit
 class ViewModelPokemon: ObservableObject {
     @Published var pokemonDetail = [PokemonDetail]()
-    @Published var aboutPokemonViewColorBackground: UIColor = .white
-    @Published var pokemonColorsTypes: [Tipo: UIColor] = [:]
 
-    func fetchDetails(pokemonName: String) {
+    func fetchDetails(pokemonName: String, onSuccess: @escaping(Bool) -> Void ) {
         
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemonName)") else {
             return
@@ -26,18 +24,12 @@ class ViewModelPokemon: ObservableObject {
                 
             } else if let data = data {
                 do {
-                    
                     let jsonModel = try JSONDecoder().decode(PokemonDetail.self, from: data)
-                  //  print(jsonModel)
+                  
                     DispatchQueue.main.async { [self] in
                         self.pokemonDetail = [jsonModel]
-                        self.aboutPokemonViewColorBackground = BackgroundColorCreator.setBackgroundColor(type: self.pokemonDetail[0].types[0].type.name)
-                        
-                        for i in self.pokemonDetail[0].types {
-                            self.pokemonColorsTypes[i.type.name] = BackgroundColorCreator.setBackgroundColor(type: i.type.name)
-                        }
-                        pokemonDetail[0].colors = pokemonColorsTypes
-
+                    
+                        onSuccess(true)
                     }
                 } catch  {
                     print("Failed to decode JSON: \(error)")
