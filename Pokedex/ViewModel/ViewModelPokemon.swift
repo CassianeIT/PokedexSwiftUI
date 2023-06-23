@@ -37,4 +37,26 @@ class ViewModelPokemon: ObservableObject {
             }
         }.resume()
     }
+    
+    func fetchPokemon(pokemonName: String, completion: @escaping (PokemonDetail?) -> Void) {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemonName)") else {
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error has occurred: \(error.localizedDescription)")
+                completion(nil)
+            } else if let data = data {
+                do {
+                    let jsonModel = try JSONDecoder().decode(PokemonDetail.self, from: data)
+                    completion(jsonModel)
+                } catch {
+                    print("Failed to decode JSON: \(error)")
+                    completion(nil)
+                }
+            }
+        }.resume()
+    }
 }

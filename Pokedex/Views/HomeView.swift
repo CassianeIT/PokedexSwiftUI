@@ -19,23 +19,15 @@ struct CustomTextField: View {
             
             if pokemonName.isEmpty { placeholder }
             TextField("", text: $pokemonName, onEditingChanged: editingChanged, onCommit: commit)
-            
-            //  .padding(.trailing, 20)
         }
     }
 }
 
 
-
-
 struct HomeView: View {
-    @ObservedObject var pokemonApiService: ViewModelPokemon
-    
     @State var name = ""
     @State private var searchCommit = false
-    
- //   @State var aboutPokemonViewColorBackground: UIColor = .white
-    
+        
     var body: some View {
         if #available(iOS 16.0, *) {
             NavigationStack {
@@ -48,7 +40,7 @@ struct HomeView: View {
                         
                     )
                     .foregroundColor(.yellow)
-                    .padding(.top, 300)
+                    .padding(.top, 100)
                     
                     ZStack(alignment: .leading) {
                         Image(systemName: "magnifyingglass")
@@ -65,12 +57,17 @@ struct HomeView: View {
                     
                     .onSubmit {
                         Task {
-                            searchCommit =  await fecth(searchPokemon: name.lowercased())
-                            
-//                            if let pokemon = pokemonApiService.pokemonDetail.first {
-//                                aboutPokemonViewColorBackground = BackgroundColorCreator.setBackgroundColor(pokemon: pokemonApiService.pokemonDetail[0])
-//                            }
+                            searchCommit =  true
                         }
+                    }
+                    NavigationLink(destination: AboutPokemon(pokemon: "1")) {
+                        Text("Ver todos os Pokemons")
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .cornerRadius(10)
+                            .padding(.top, 200)
                     }
                 }.background(
                     Image("background")
@@ -79,12 +76,7 @@ struct HomeView: View {
                         .edgesIgnoringSafeArea(.all)
                 )
                 .navigationDestination(isPresented: $searchCommit) {
-                 
-                    if let pokemon = pokemonApiService.pokemonDetail.first {
-                                              
-                        AboutPokemon(pokemon: pokemon)
-                    }
-                    
+                        AboutPokemon(pokemon: name)
                 }
                 .onAppear {
                     searchCommit = false
@@ -107,22 +99,14 @@ struct HomeView: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
-                // lineWidth: isEditing ? 4 : 2
             )
     }
     
     // MARK: - Private methods
-    private func fecth(searchPokemon: String) async  -> Bool {
-        try? await pokemonApiService.fetchDetails(pokemonName: searchPokemon) { result in
-            searchCommit = result
-        }
-    //    try? await Task.sleep(nanoseconds: 1_000_000_000)
-        return searchCommit
-    }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(pokemonApiService: ViewModelPokemon())
+        HomeView()
     }
 }
