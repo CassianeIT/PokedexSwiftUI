@@ -12,7 +12,7 @@ struct AboutPokemon: View {
     @ObservedObject var pokemonApiService = ViewModelPokemon()
     @State private var pokemon: PokemonDetail?
     private var imageURLPokemon = ""
-    @State private var isMyChildViewPresented = false
+    @State private var isPokemonDescriptionPresented = false
     @State private var isViewVisible = false
     private var pokemonName = ""
     @State private var isLeftArrowVisible = false
@@ -96,22 +96,24 @@ struct AboutPokemon: View {
                                 }
                             }
                     VStack{
-                        Button(action: { self.isMyChildViewPresented = true }) {
+                        Button(action: { self.isPokemonDescriptionPresented = true }) {
                             ZStack {
                                 
-                                MyChildView(backgroundColor: Color(BackgroundColorCreator.setBackgroundColor(type: typePokemon)), pokemon: pokemon)
+                                PokemonDescription(backgroundColor: Color(BackgroundColorCreator.setBackgroundColor(type: typePokemon)), pokemon: pokemon)
                             }
                         }
                         .foregroundColor(.white)
                         .padding(.top, 30)
                         .edgesIgnoringSafeArea(.all)
+                        .frame(width: 350, height: 160)
                     }
-                    .sheet(isPresented: $isMyChildViewPresented)  {
-                        MyChildView(backgroundColor: Color(BackgroundColorCreator.setBackgroundColor(type: typePokemon)), pokemon: pokemon)
+                    .sheet(isPresented: $isPokemonDescriptionPresented)  {
+                        PokemonDescription(backgroundColor: Color(BackgroundColorCreator.setBackgroundColor(type: typePokemon)), pokemon: pokemon)
                             .padding()
                             .cornerRadius(10)
-                    }.background(Color.red)
-                        .frame(width: 350, height: 200)
+                    }
+                    .background(Color.red)
+                    .frame(width: 350, height: 150)
                 }
                 .navigationBarTitle("ID: \(pokemon.id)")
             } else {
@@ -164,65 +166,8 @@ struct AboutPokemon: View {
         }
 }
 
-
 struct AboutPokemon_Previews: PreviewProvider {
     static var previews: some View {
         AboutPokemon(pokemon: "")
     }
-}
-
-struct MyChildView: View {
-    @State private var selectedOption = 0
-    private var backgroundColor: Color
-    private var pokemon: PokemonDetail
-    
-    init(backgroundColor: Color, pokemon: PokemonDetail ) {
-        self.backgroundColor = backgroundColor
-        self.pokemon = pokemon
-    }
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Show more..")
-                Image(systemName: "arrow.up.heart.fill")
-            }
-            .font(.headline)
-            .padding(.bottom, 40)
-            .padding(.top, 10)
-            
-            ZStack{
-                VStack {
-                    Picker("", selection: $selectedOption) {
-                        Text("About").tag(0)
-                        Text("Stats").tag(1)
-                        Text("Moves").tag(2)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal)
-                }
-                .padding(.top, 30)
-                .background(Color.gray)
-                .cornerRadius(10)
-                
-                // .overlay(
-                AsyncImage(url: URL(string: pokemon.imagem.style.home.front))
-                {
-                    image in
-                    image.resizable()
-                } placeholder: {
-                    //add placeholder
-                }
-                .frame(width: 70, height: 70, alignment: .center)
-                .padding(.top, -80)
-            }
-
-            
-        }
-        .background(backgroundColor)
-        .cornerRadius(10)
-        .padding(.bottom, 20)
-        Spacer()
-    }
-    
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26C216CB2A4637990000D39F /* PokemonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C216CA2A4637990000D39F /* PokemonDescription.swift */; };
 		DA7277FC296F5C4800590CFE /* ViewModelPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7277FB296F5C4800590CFE /* ViewModelPokemon.swift */; };
 		DA7277FF296F5E8E00590CFE /* PokemonDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7277FE296F5E8E00590CFE /* PokemonDetail.swift */; };
 		DA727803296F723700590CFE /* AboutPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA727802296F723700590CFE /* AboutPokemon.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		26C216CA2A4637990000D39F /* PokemonDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDescription.swift; sourceTree = "<group>"; };
 		DA7277FB296F5C4800590CFE /* ViewModelPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelPokemon.swift; sourceTree = "<group>"; };
 		DA7277FE296F5E8E00590CFE /* PokemonDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetail.swift; sourceTree = "<group>"; };
 		DA727802296F723700590CFE /* AboutPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPokemon.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				DAACD39D2908811300582EB5 /* HomeView.swift */,
 				DA727802296F723700590CFE /* AboutPokemon.swift */,
+				26C216CA2A4637990000D39F /* PokemonDescription.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7277FC296F5C4800590CFE /* ViewModelPokemon.swift in Sources */,
+				26C216CB2A4637990000D39F /* PokemonDescription.swift in Sources */,
 				DAACD39E2908811300582EB5 /* HomeView.swift in Sources */,
 				DA727803296F723700590CFE /* AboutPokemon.swift in Sources */,
 				DA7277FF296F5E8E00590CFE /* PokemonDetail.swift in Sources */,
