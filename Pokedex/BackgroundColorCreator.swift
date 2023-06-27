@@ -42,7 +42,7 @@ enum BackgroundColorCreator {
         case .ice:
             circleBackground = .blue
         case .normal:
-            circleBackground = .gray
+            circleBackground = .lightGray
         case .poison:
             circleBackground = .purple
         case .psychic:
